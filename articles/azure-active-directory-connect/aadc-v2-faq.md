@@ -40,6 +40,7 @@ V2 ということで、メジャー アップデート版となりますが、�
 
 ### ローカル DB にインストールされる SQL が SQL Server 2019 コンポーネントに変更されました
 SQL Server 2019 のリリースに伴い、これまで同梱されていた SQL Server 2012 LocalDB (Express 版) が、SQL Server 2019 LocalDB にアップデートされました。
+なお、現時点で同梱されている SQL Server 2012 LocalDB (Express 版) ではなく製品版の SQL Server ご利用されている場合は何も影響はございません。
 
 <a id="anchor3"></a>
 
@@ -73,7 +74,7 @@ AADC v2 では TLS 1.2 のみをサポートするように更新されました
 <a id="anchor6"></a>
 
 ### Azure AD Connect インストール時、Hybrid Identity Administrator 権限でインストールが可能となりました
-Azure AD Connect のインストール時、これまでは Azure AD のグローバル管理者の資格情報が必須となっていましたが、代わりに Hybrid Identity Administrator (ハイブリッド ID の管理者) の役割を持つユーザーの資格情報を用いてインストールできます。
+Azure AD Connect のインストール時、これまでは Azure AD のグローバル管理者の資格情報が必須となっていましたが、代わりに Hybrid Identity Administrator (ハイブリッド ID の管理者) の役割を持つユーザーの資格情報を用いてインストールが可能です。
 
 Hybrid Identity Administrator の役割については以下をご参照ください。<br> [Azure AD の組み込みロール - Azure Active Directory | Microsoft Docs - ハイブリッド ID の管理者](https://docs.microsoft.com/ja-jp/azure/active-directory/roles/permissions-reference#hybrid-identity-administrator)
 
@@ -86,7 +87,7 @@ Windows セキュリティ ガイドラインに基づき、Active Directory の
 Azure AD Connect の初回インストール時にウィザード内でサービス アカウントを作成するように設定していた場合、 MSOL_XXXXXX というアカウントがオンプレミス AD 上に作成されます。<br>
 これまでは Azure AD Connect インストール ウィザードを進める中で自動的に AdminSDHolder に対して MSOL_XXXXXX というアカウントが書き戻しできるようにすべてのプロパティに対して読み取り・書き込み権限が付与されましたが、今後新規インストール時には付与されない動作と変更が加わりました。
 
-管理者ユーザーに対してもライトバックできるようにしたい場合には、別途個別に AdminSDHolder に対して権限付与を行う必要があります。
+管理者ユーザーに対しても属性値、およびパスワードをライトバックできるようにしたい場合には、別途個別に AdminSDHolder に対して権限付与を行う必要があります。
 
 <a id="anchor8"></a>
 
@@ -99,7 +100,7 @@ Active Directory にてユーザーの "次回ログオン時にパスワード�
 AADC v2 では、Azure AD の v2 エンドポイントに接続して同期処理を行います。
 これにより、1 グループのメンバーとして 250,000 ユーザーを同期できるようになりました。(従来は 50,000 メンバーが上限)
 <Br>
-過去事例では、これまで完全同期に 8 時間ほど掛かっていたところ、v2 エンドポイントに切り替えたことで 3 時間に短縮されたとの報告もありますので、ぜひお試しください。
+また、v2 エンドポイントはパフォーマンスの面でも優れています。過去事例では、これまで完全同期に 8 時間ほど掛かっていたところ、v2 エンドポイントに切り替えたことで 3 時間に短縮されたとの報告もありますので、ぜひお試しください。
 
 なお、V2 エンドポイントは、AADC 1.5.30.0 以降であればご利用いただけます。
 
@@ -133,6 +134,7 @@ AADC v2 では、Azure AD の v2 エンドポイントに接続して同期処�
 **A: はい、エンドポイントの URL に変更はありません。**
 
 今までと同様に以下の公開情報通りの URL を利用します。エンドポイントに接続後の処理が従来の v1 と v2 では異なります。
+そのため、プロキシサーバーなどで Azure AD Connect がアクセスするエンドポイント URL を制限されている環境においては特別な追加対応は不要となります。
 
 [ハイブリッド ID で必要なポートとプロトコル - Azure | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/hybrid/reference-connect-ports)
 <br> [Azure AD Connect:Azure AD 接続性に関する問題のトラブルシューティング | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/hybrid/tshoot-connect-connectivity)
@@ -149,7 +151,7 @@ Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Services\ADSync\Parameters' | S
 
 値が空の場合は v1 に接続していることを示します。
 
-![](./aadc-v2-faq/2021-08-03_11h50_28.png)
+![](./aadc-v2-faq/2021-08-03_11h47_50.png)
 
 値が以下のように表示される場合は v2 に接続していることを示します。
 ![](./aadc-v2-faq/2021-08-03_11h47_50.png)
@@ -160,7 +162,7 @@ Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Services\ADSync\Parameters' | S
 
 **A: 今まで通り可能です。**
 
-手元では 1.3.x から 2.0.4 へのインプレース アップグレードが可能なことを確認しております。同期ルールを手動で変更・追加を行っている環境では問題が生じる可能性もございますので、必ず本番環境と同じ設定を行っている検証環境、またはステージング モードのサーバー上でインプレース アップグレードが可能であるかをご確認頂いてからの実施をお勧めいたします。
+弊社の検証環境では 1.3.x から 2.0.4 へのインプレース アップグレードが可能なことを確認しております。同期ルールを手動で変更・追加を行っている環境では変化が生じる可能性もございますので、必ず本番環境と同じ設定を行っているテスト環境での検証、または本番のステージングサーバーを利用したスイング移行が可能であるかをご確認頂いてからの実施をお勧めいたします。
 検証環境で何らかの理由で正常にアップグレードが行えなかった場合には、別途新規サーバーをご用意いただき、新規サーバー上で新規に Azure AD Connect v2 をインストール頂き構築することをご検討ください。
 
 ---
