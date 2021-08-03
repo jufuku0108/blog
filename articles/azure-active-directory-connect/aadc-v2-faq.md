@@ -183,5 +183,12 @@ Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Services\ADSync\Parameters' | S
 「3.どうやって大きな作業に向けた事前確認で安心できるの？」の項目をご連絡ください。
 
 ---
+**Q: Azure AD Connect インストール済みの環境で OS アップグレードは可能ですか。**
+
+**A: いいえ、 Azure AD Connect インストール済みの環境での OS アップグレードはできません。**
+
+現在 Windows Server 2012 R2 をご利用いただいている場合、 Azure AD Connect V2 を利用するには OS バージョンをアップグレードをする必要があります。しかし、 Azure AD Connect インストール済みの環境で OS をアップグレードすることは非サポートとなります。<br>そのため、現在 Windows Server 2012 R2 環境で Azure AD Connect をご利用頂いている場合には、別に Windows Server 2016 以降のサーバー OS をインストールしたサーバーを用意し、スウィング移行を実施して Azure AD Connect V2 にアップグレードする必要があります。
+
+---
 
 いかがでしたでしょうか。メジャー アップデートに伴い様々な機能が強化されておりますので、是非アップグレードをご検討頂けますと幸いです。不明な点はお気軽にサポート窓口までお問い合わせください。
