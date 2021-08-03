@@ -149,7 +149,7 @@ Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Services\ADSync\Parameters' | S
 
 値が空の場合は v1 に接続していることを示します。
 
-![](./aadc-v2-faq/2021-08-03_11h47_50.png)
+![](./aadc-v2-faq/2021-08-03_11h50_28.png)
 
 値が以下のように表示される場合は v2 に接続していることを示します。
 ![](./aadc-v2-faq/2021-08-03_11h47_50.png)
